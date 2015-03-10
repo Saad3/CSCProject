@@ -1,3 +1,5 @@
+import javax.swing.text.Document;
+
 import linkedList.LinkedList;
 //import java.io.*;
 //import java.util.*;
@@ -7,9 +9,9 @@ import linkedList.LinkedList;
 public class Preprocessor {
 	
 	
-	LinkedList<String>StopWord;
-	LinkedList<String>stem;
-	LinkedList<LinkedList<String>>corpus;
+	private LinkedList<String>StopWord;
+	private	LinkedList<String>stem;
+	private LinkedList<LinkedList<String>>corpus;
 	
 	public Preprocessor() {
 		// Initializes the required data structures.
@@ -82,10 +84,31 @@ public class Preprocessor {
 		// Each element of the list contains a single word.
 		// Spaces are not included. The order of the words must be the same as in the initial text document.
 		
+		loadCorpus("corpus.txt");
+		int count =0;
+		corpus.findFirst();
+		LinkedList<String> Document1 ;
+
+			while(count != i && !corpus.last()){
+				corpus.findNext();
+				count++;
+			}
+			
+			if(i==count){
+			Document1 =corpus.retrieve();
+			Document1.findFirst();	
+			}
+			else
+				return null;
+			
+			
+			while(!Document1.last()){
+				Document1.retrieve().replaceAll("\\s+","");
+				Document1.findNext();
+			}
+			Document1.retrieve().replaceAll("\\s+","");
 		
-		LinkedList<String> Hi =null;
-		
-		return Hi;
+		return Document1;
 	}
 
 }
