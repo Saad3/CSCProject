@@ -1,0 +1,65 @@
+public String removeStopWords(LinkedList<String> ccc) {
+		// سويت مصفوفة عشان اضيف به الي الي السطور بعد ما حذفت منه كلمات التوقف 
+		Queue <String> newcor = new Queue <String>();
+		
+		// عمليه المقارنه بين ملف الاساسي و ملف كلمات التوقف وحذف كلمات التوقف
+	       	stop.findfirst();
+		while (stop != null){
+			
+			String stopword = stop.retrieve();
+			ccc.findnext();
+			    while (ccc!= null){
+			    	String words[] = ccc.retrieve().split("\\s+");
+			    	 if (ccc.current.next != null)            {ccc.remove();}
+			    	        for(int i=0 ; i<words.length-1;i++){
+			    	        	
+			    	        	if (stopword.equals(words[i])){       RemoveArreyIndex(i,words);    }
+			    	        
+			    	        }
+			    	        
+			    	        
+			  //  من نوع مصفوفه كلمات الى جمله واحدة  words هنا احول المصفوفة   	        
+			    	        String newwords = "";
+			    			for (String m :words ) {
+			    			m=m+" ";
+			    			   newwords += m;
+			    }
+			    	        
+			    	        // اضيف الجمله الواحدة بعد التعديل هنا 
+			    	        newcor.enqueue(newwords);
+			    	        
+			    }
+			    stop.findnext();
+		}
+		
+		// remove stop words() احول جميع الجمل الى جمله واحده لكي ارجعها للداله حقتي الي هي
+		
+		String v = newcor.serve();
+		while (newcor.head.data != null){
+			v = v+"\n"+newcor.serve();
+		}
+		
+		
+	
+		
+		
+		
+		
+		
+		// هنا رجعنتها لكن ما ظبطت معي حاولت اكثر من مره عدتها كتابيا مره ثانيه وما فرق شي 
+		
+		return v;
+		
+		
+	}
+	
+	public void RemoveArreyIndex(int index, String[] words){ 
+	
+	//words استخدمت هذي الداله لحذف كلمات التوقف من المصفوفة  
+		
+		
+		for (int i=index ; i < words.length-1 ; i++){
+			words[i]=words[i+1];
+			words[words.length-1]="";
+			
+		}
