@@ -34,7 +34,7 @@ public class ReadFileByBuffer {
 			
 			return stringByLine;
 		}
-	//not complet !!
+	
 	
 	
 	
