@@ -1,0 +1,169 @@
+		
+	public void tfIdf () throws FileNotFoundException, IOException{
+		if(cor.empty()){
+			loadCorpus("/Users/saleh/Desktop/Project/data/corpus/corpus.txt");
+		}
+		
+	Vector v = madevector(cor);
+	
+	Object[] s = v.toArray();
+	for(int i=0 ; i< s.length ;i++){
+	System.out.print(s[i] + "\t"); 
+	for (int j = 0 ; j < s.length ; i++){
+		System.out.print(countTFIDF((String) s[i], getDoc(j))+"\t");
+	}
+	System.out.println("");
+	}
+	
+		
+	}
+	public double[] getDocTfIdf(int i) throws FileNotFoundException, IOException {
+
+		
+		String s = getDoc(i);
+		String[] m = s.split("\\s+");
+		
+		double ff[] = new double [m.length];
+		
+		for(int j=0 ; j<m.length ; j++){
+			ff[j] = countTFIDF(m[j], getDoc(i));
+		}
+		
+		return ff;
+		
+	}
+	
+	public LinkedList<String> getDocument(int i) throws FileNotFoundException, IOException{
+
+		
+		return cor;
+	}
+	
+	
+	public double numberOfDocuments() throws FileNotFoundException, IOException{
+		   if(cor.empty()){
+		   loadCorpus("/Users/saleh/Desktop/Project/data/corpus/corpus.txt");
+		   }
+		   cor.findfirst();
+		   int count=0;
+		   while(!cor.last()){
+			   count++;
+			   cor.findnext();
+		   }count++;
+		   return count;
+	   }
+	 
+	 
+    public boolean findindocument (String w , String e) throws FileNotFoundException, IOException{
+		
+		String words[] = e.split("\\s+");
+		
+		for(int i = 0 ; i < words.length;i++){
+			if (words[i].equals(w)){return true ;}
+		}
+		return false;
+	} 
+
+
+
+	
+	public double count (String w) throws FileNotFoundException, IOException{
+		if(cor.empty()){
+		loadCorpus("/Users/saleh/Desktop/Project/data/corpus/corpus.txt");
+		}
+		int count =0;
+		cor.findfirst();
+		while(!cor.last()){
+		if(findindocument(w ,cor.retrieve())){count++;};
+		cor.findnext();
+		}if(findindocument(w ,cor.retrieve())){count++;};
+		
+		return count;
+		
+	}
+	
+	
+	
+	public double countIDF (String s) throws FileNotFoundException, IOException{
+		
+		
+		
+		 return Math.log(numberOfDocuments()/count(s));
+		
+		
+		
+	}
+	
+	public int numberOccurInOneDocument(String word,String doc){
+		int count=0;
+		String document[] =doc.split("\\s+");
+		
+		for(int i = 0 ; i < document.length; i++){
+			if(document[i].equals(word)){count++;}
+		}
+		return count;
+	}
+	
+	public double countTFIDF(String word,String doc) throws FileNotFoundException, IOException{
+		int noo = numberOccurInOneDocument(word,doc);
+		double idf = countIDF(word);
+		
+		if(noo==0){return 0;}
+		else return (1 + Math.log(noo)) * idf;
+		
+	}
+	
+	public String getDoc (int s) throws FileNotFoundException, IOException{
+		 Vector v = new Vector ();
+		
+		 if(cor.empty()){
+			 loadCorpus("/Users/saleh/Desktop/Project/data/corpus/corpus.txt");
+		 }
+		 
+		 
+		 cor.findfirst();
+	 
+		 while (!cor.last()){
+			 v.add(cor.retrieve());
+			 cor.findnext();
+		 }v.add(cor.retrieve());
+		 
+		 return (String) v.get(s);
+		 
+		 
+	 }
+	
+	public Vector madevector(LinkedList<String> cor){
+		Vector v = new Vector();
+		LinkedList <String> terms = new LinkedList <String>();
+		LinkedListToListWords(cor, terms);
+		
+		terms.findfirst();
+		
+		while (!terms.last()){
+			if(!v.contains(terms.retrieve())){
+			v.add(terms.retrieve());
+			}
+			terms.findnext();
+		}v.add(terms.retrieve());
+		
+		java.util.Collections.sort(v);
+		
+		return v;
+	}
+
+public void LinkedListToListWords(LinkedList<String> cor,LinkedList<String> term){
+		
+		cor.findfirst();
+		while(!cor.last()){
+		String words[] = cor.retrieve().split("\\s+");
+		for(int i=0 ; i<words.length ; i++){
+			term.insert(words[i]);
+			cor.findnext();
+		}
+	}String words[] = cor.retrieve().split("\\s+");
+	for(int i=0 ; i<words.length ; i++){
+		term.insert(words[i]);
+	 }
+	}
+	
