@@ -10,7 +10,7 @@
 	for(int i=0 ; i< s.length ;i++){
 	System.out.print(s[i] + "\t"); 
 	for (int j = 0 ; j < s.length ; i++){
-		System.out.print(countTFIDF((String) s[i], getDoc(j))+"\t");
+		System.out.print(countTFIDF((String) s[j], getDoc(j))+"\t");
 	}
 	System.out.println("");
 	}
